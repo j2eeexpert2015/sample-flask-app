@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  flask-app:
+    build: .
+    ports:
+      - "5000:5000"  # Map Flask app port
+      - "5678:5678"  # Map debugpy debugger port
+    volumes:
+      - .:/app  # Mount the current directory into the container for live code updates
+    environment:
+      FLASK_ENV: development  # Enable Flask development mode
+      PYTHONUNBUFFERED: 1  # Force Python to disable output buffering, ensuring immediate log output to Docker logs      
+    command: python -m debugpy --listen 0.0.0.0:5678 app.py  
+
+    
